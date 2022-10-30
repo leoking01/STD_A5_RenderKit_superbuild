@@ -20,6 +20,7 @@ macro(build_subproject)
   # See cmake_parse_arguments docs to see how args get parsed here:
   #    https://cmake.org/cmake/help/latest/command/cmake_parse_arguments.html
   set(oneValueArgs NAME URL CUSTOM_SOURCE_PACKAGE_PATH)
+  message("start: URL = ${URL}")
   set(multiValueArgs BUILD_ARGS DEPENDS_ON PATCH_COMMAND)
   cmake_parse_arguments(BUILD_SUBPROJECT "" "${oneValueArgs}"
                         "${multiValueArgs}" ${ARGN})
@@ -51,14 +52,34 @@ macro(build_subproject)
     BUILD_COMMAND ${DEFAULT_BUILD_COMMAND}
     PATCH_COMMAND ${BUILD_SUBPROJECT_PATCH_COMMAND}
     BUILD_ALWAYS OFF
+
+    LOG_DOWNLOAD   ON
+    LOG_UPDATE   ON
+    LOG_PATCH   ON
+    LOG_CONFIGURE    ON
+    LOG_BUILD    ON
+    LOG_INSTALL   ON
+    LOG_MERGED_STDOUTERR   ON
+    LOG_OUTPUT_ON_FAILURE   ON
   )
 
   if(BUILD_SUBPROJECT_DEPENDS_ON)
     ExternalProject_Add_StepDependencies(${SUBPROJECT_NAME}
       configure ${BUILD_SUBPROJECT_DEPENDS_ON}
+
+#      LOG_DIR "./logLK.txt"
+#      LOG_DOWNLOAD   ON
+#      LOG_UPDATE   ON
+#      LOG_PATCH   ON
+#      LOG_CONFIGURE    ON
+#      LOG_BUILD    ON
+#      LOG_INSTALL   ON
+#      LOG_MERGED_STDOUTERR   ON
+#      LOG_OUTPUT_ON_FAILURE   ON
     )
   endif()
 
   # Place installed component on CMAKE_PREFIX_PATH for downstream consumption
   append_cmake_prefix_path(${SUBPROJECT_INSTALL_PATH})
+  message("finish:  URL = ${URL}   ")
 endmacro()
