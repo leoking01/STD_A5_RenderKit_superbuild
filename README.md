@@ -35,3 +35,18 @@ python3 <build_path>/ospray_studio/source/pysg/tutorial/sgTutorial.py
 By default, all projects will be installed into `build/install` (if following
 the above instructions exactly), unless `CMAKE_INSTALL_PREFIX` is set to
 somewhere else.
+
+
+
+//-------------------------------------------------------------------------------
+
+编译情况如下（网速时断时续，非常费时间）：
+
+在qt6.3.2Vs2019上debug编译通过；
+
+在qt5.12.12Vs2015Debug编译通过；
+
+release都没有通过；
+
+在vs2019上debug，release编译都通过。
+
